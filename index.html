@@ -9,41 +9,18 @@
   <body>
     <div class="quiz-container">
       <h1>Software Engineering Quiz</h1>
-      <div class="timer">Time left: 15 seconds</div>
-      <h2 class="question">
-        Which of the following is not a programming language?
-      </h2>
-      <div class="options">
-        <button class="option">"HTML"</button>
-        <button class="option">"Java"</button>
-        <button class="option">"JavaScript"</button>
-        <button class="option">"Kotlin"</button>
-      </div>
+      <div class="timer">Time left: <span id="time">15</span> seconds</div>
+      <h2 class="question">Loading Question...</h2>
+      <div class="options"></div>
       <button class="next_btn">NEXT</button>
     </div>
 
-    <div class="quiz_result"></div>
+    <div class="quiz_result hidden">
+      <h2>Quiz Completed!</h2>
+      <p>Your Score: <span id="score"></span> / 50</p>
+      <button class="restart_btn">Restart Quiz</button>
+    </div>
 
     <script src="main.js"></script>
-
-    <!-- <header>
-      <h1>Java Quiz</h1>body {
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  text-align: center;
-  padding: 20px;
-}
-
-header {
-  background: #333;
-  color: white;
-  padding: 10px;
-  border-radius: 5px;
-} */
-
-    </header>
-    <main>
-      <p>This is a simple HTML and CSS project.</p>
-    </main> -->
   </body>
 </html>
