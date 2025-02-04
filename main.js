@@ -254,7 +254,7 @@ const questions = [
       "Exits the program",
       "Repeats the current iteration",
     ],
-    answer: "skips the current iteration and continues with the next one",
+    answer: "Skips the current iteration and continues with the next one",
   },
 ];
 
@@ -361,14 +361,13 @@ nextBtn.addEventListener("click", () => {
 function endQuiz() {
   clearInterval(timerInterval);
   document.querySelector(".quiz-container").style.display = "none";
+  resultContainer.style.display = "block";
   resultContainer.classList.remove("hidden");
   scoreEl.textContent = `${score} / ${questions.length}`;
 }
 
-function showResult() {
-  document.getElementById("quiz").style.display = "none";
-  resultEl.style.display = "block";
-  scoreEl.textContent = `Your score: ${score} out of ${questions.length}`;
-}
-
-restartBtn.addEventListener("click", startQuiz);
+restartBtn.addEventListener("click", () => {
+  resultContainer.style.display = "none";
+  resultContainer.classList.add("hidden");
+  startQuiz();
+});
