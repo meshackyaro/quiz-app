@@ -75,6 +75,31 @@ body {
   text-transform: uppercase;
 }
 
+.start {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.quiz-container,
+.quiz_result {
+  display: none;
+}
+.start_btn {
+  font-size: 24px; /* Bigger text */
+  padding: 15px 30px; /* More padding */
+  background-color: #28a745; /* Green background */
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.start_btn:hover {
+  background-color: #218838;
+}
 .quiz_result {
   display: none;
   max-width: 600px;

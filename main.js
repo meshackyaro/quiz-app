@@ -34,12 +34,11 @@ const questions = [
     options: ["Django", "React", "Laravel", "Flask"],
     answer: "React",
   },
-  // Add 45 more questions...
 ];
 
 let currentQuestionIndex = 0;
 let score = 0;
-let timer;
+let timerInterval;
 let timeLeft = 15;
 
 const questionEl = document.querySelector(".question");
@@ -50,6 +49,34 @@ const resultContainer = document.querySelector(".quiz_result");
 const scoreEl = document.getElementById("score");
 const restartBtn = document.querySelector(".restart_btn");
 
+document.querySelector(".start_btn").addEventListener("click", function () {
+  document.querySelector(".start").style.display = "none";
+  document.querySelector(".quiz-container").style.display = "block";
+
+  startQuiz();
+});
+
+function startTimer() {
+  clearInterval(timerInterval);
+  timeLeft = 15;
+  timerEl.textContent = timeLeft;
+
+  timerInterval = setInterval(() => {
+    if (timeLeft > 0) {
+      timeLeft--;
+      timerEl.textContent = timeLeft;
+    } else {
+      clearInterval(timerInterval);
+      alert("Time's up!");
+      disableOptions();
+      document.querySelector(".next_btn").style.display = "block";
+    }
+
+    if (timeLeft <= 5) timerEl.parentElement.classList.add("danger");
+  }, 1000);
+  nextBtn.style.display = "none";
+}
+
 function startQuiz() {
   currentQuestionIndex = 0;
   score = 0;
@@ -59,19 +86,13 @@ function startQuiz() {
 }
 
 function loadQuestion() {
-  clearInterval(timer);
-  timeLeft = 15;
-  timerEl.textContent = timeLeft;
-  timer = setInterval(() => {
-    timeLeft--;
-    timerEl.textContent = timeLeft;
-    if (timeLeft <= 5) timerEl.parentElement.classList.add("danger");
-    if (timeLeft === 0) {
-      clearInterval(timer);
-      disableOptions();
-      nextBtn.style.display = "block";
-    }
-  }, 1000);
+  if (currentQuestionIndex >= questions.length) {
+    endQuiz();
+    return;
+  }
+
+  clearInterval(timerInterval);
+  startTimer();
 
   const currentQuestion = questions[currentQuestionIndex];
   questionEl.textContent = currentQuestion.question;
@@ -89,7 +110,8 @@ function loadQuestion() {
 }
 
 function checkAnswer(button, selectedAnswer) {
-  clearInterval(timer);
+  clearInterval(timerInterval);
+
   const correctAnswer = questions[currentQuestionIndex].answer;
   if (selectedAnswer === correctAnswer) {
     button.classList.add("correct");
@@ -100,6 +122,7 @@ function checkAnswer(button, selectedAnswer) {
       if (btn.textContent === correctAnswer) btn.classList.add("correct");
     });
   }
+
   disableOptions();
   nextBtn.style.display = "block";
 }
@@ -110,19 +133,14 @@ function disableOptions() {
 
 nextBtn.addEventListener("click", () => {
   currentQuestionIndex++;
-  if (currentQuestionIndex < questions.length) {
-    loadQuestion();
-  } else {
-    endQuiz();
-  }
+  loadQuestion();
 });
 
 function endQuiz() {
+  clearInterval(timerInterval);
   document.querySelector(".quiz-container").style.display = "none";
   resultContainer.classList.remove("hidden");
   scoreEl.textContent = `${score} / ${questions.length}`;
 }
 
 restartBtn.addEventListener("click", startQuiz);
-
-startQuiz();
